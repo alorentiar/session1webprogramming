@@ -1,5 +1,6 @@
 <?php
     session_start();
+    include("config.php");
 ?>
 
 <!DOCTYPE html>
@@ -32,5 +33,28 @@
         <input type="submit" name="submit" value="Upload">
     </form>
     
+    <?php
+        $str_query = "SELECT * FROM mahasiswa";
+
+        $query = mysqli_query($connection, $str_query);
+        
+        // $data = mysqli_fetch_array($query);
+
+        while($data = mysqli_fetch_array($query)){
+            echo $data['nim']." - ".$data['nama']." - ".$data['jurusan']." - ".$data['alamat']." - ".$data['tanggal_lahir']."
+            <a href='edit.php?id=".base64_encode($data['nim'])."'>Edit</a>&nbsp<a href='delete.php?id=".base64_encode($data['nim'])."'>Delete</a> <br>";
+        }
+    
+    ?>
+    <br>
+    <form action="prosesDaftarMahasiswa.php" method="post">
+        NIM : <input type="text" name="nim"/></br>
+        Nama : <input type="text" name="nama"/></br>
+        Jurusan : <input type="text" name="jurusan"/></br>
+        Alamat : <textarea name="alamat"/></textarea></br>
+        Tgl Lahir : <input type="date" name="tanggal_lahir"/></br>
+        <input type="submit" name="submit" value="Daftar"/>
+    </form>
+
 </body>
 </html>
